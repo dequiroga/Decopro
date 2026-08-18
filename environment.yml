@@ -1,0 +1,10 @@
+name: decopro_env
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - matplotlib==3.10.0
+  - numpy==2.2.3
+  - pandas==2.2.3
+  - pathlib==1.0.1

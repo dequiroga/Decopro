@@ -3,7 +3,6 @@
 
 """
 
-import sys
 import logging
 
 import numpy as np
@@ -55,11 +54,11 @@ def main():
     # TODO: Datum correction
     # subtract datum to z1 and z2, if not specified, defaults to 0
 
-    z2_solutions = []
-    solved_layers = []
-    layer_porosity_dict = dict()
-    layer_name_dict = dict()
-    stage_dict = dict()
+    z2_solutions: list = []
+    solved_layers: list = []
+    layer_porosity_dict: dict = dict()
+    layer_name_dict: dict = dict()
+    stage_dict: dict = dict()
     for i, layer in enumerate(data.iterrows()):
         logger.info(f"Solving for Stage {i + 1}")
 
@@ -74,8 +73,6 @@ def main():
         logger.debug(f"Current Layer is {current_layer.id}")
         logger.debug(current_layer)
         logger.debug("==================")
-
-        # print(data.iloc[i])
 
         # Solve for z2 prime (current layer)
         z2_prime = solve_layer(
@@ -127,7 +124,8 @@ def main():
                     temp = new_z2_prime  # THIS IS A HACK
 
                     # Solve for z2 prime (past layers)
-                    new_z2_prime = solve_layer(  # This re assigment of new_z2_prime is critical. becomes the one for nex iter
+                    # This re assigment of new_z2_prime is critical. becomes the one for nex iter
+                    new_z2_prime = solve_layer(
                         my_layer=solved_layers[j - 1], 
                         z1_prime=temp
                         )
@@ -164,20 +162,45 @@ def main():
 
 def func(zi, zj, phi_0, c):
     """
-        A function to compact a term of the main equation for readibility
+        A function to compact a term of the main equation for readability
         
     """
     return (phi_0 / c) * (np.exp(- c * zi) - np.exp(- c * zj))
     
 
-def iterative_solver(lower_bound, z2, z1, z1_prime, phi_0, c):
+def iterative_solver(
+    lower_bound: float | int,
+    z2: float | int,
+    z1: float | int,
+    z1_prime: float | int,
+    phi_0: float | int,
+    c: float | int
+) -> float:
     """
-        This function solves iterativey for the past layer base z2_prime
+        This function solves iteratively for the past layer base z2_prime
     
         solves this equation:
             
         z2_prime = (z2 - z1) - func(z1, z2, phi_0, c) + func(z1_prime, z2_prime, phi_0, c) + z1_prime
-    
+
+        TODO: eq. x from __ cite
+
+        :param lower_bound: The
+        :type lower_bound: float | int
+        :param z2:
+        :type z2:
+        :param z1:
+        :type z1:
+        :param z1_prime:
+        :type z1_prime:
+        :param phi_0:
+        :type phi_0:
+        :param c:
+        :type c:
+
+        :return: Guess for ...
+        :rtype: float
+
     """
     
     delta = 1e-4  # km
@@ -189,7 +212,7 @@ def iterative_solver(lower_bound, z2, z1, z1_prime, phi_0, c):
         else:
             z2_prime_guess = z2_prime_guess + delta
             
-    return z2_prime_guess
+    return float(z2_prime_guess)
 
 
 def solve_layer(my_layer, z1_prime):
