@@ -8,9 +8,9 @@ DecoPro implements a porosity–depth relationship based on the classical expone
 
 References: 
 
-[^1] Allen, P. A., & Allen, J. R. (2013). Basin Analysis: Principles and Application to Petroleum Play Assessment (1st ed). John Wiley & Sons, Incorporated.
+[1] Allen, P. A., & Allen, J. R. (2013). Basin Analysis: Principles and Application to Petroleum Play Assessment (1st ed). John Wiley & Sons, Incorporated.
 
-[^2] Athy, L. F. (1930). Density, Porosity, and Compaction of Sedimentary Rocks. AAPG Bulletin, 14(1), 1–24. https://doi.org/10.1306/3D93289E-16B1-11D7-8645000102C1865D
+[2] Athy, L. F. (1930). Density, Porosity, and Compaction of Sedimentary Rocks. AAPG Bulletin, 14(1), 1–24. https://doi.org/10.1306/3D93289E-16B1-11D7-8645000102C1865D
 
-[^3] Hedberg, H. D. (1936). Gravitational compaction of clays and shales. 5, 31(184), 241–287.
+[3] Hedberg, H. D. (1936). Gravitational compaction of clays and shales. 5, 31(184), 241–287.
 Sclater, J. G., & Christie, P. A. F. (1980). Continental stretching: An explanation of the Post‐Mid‐Cretaceous subsidence of the central North Sea Basin. Journal of Geophysical Research: Solid Earth, 85(B7), 3711–3739. https://doi.org/10.1029/JB085iB07p03711
