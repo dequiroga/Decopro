@@ -1,5 +1,7 @@
 # Ignore executables
 *.bat
 !*.template.bat
+!build.bat
 *.sh
 !*.template.sh
+!build.sh
