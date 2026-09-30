@@ -1,6 +1,5 @@
 name: decopro_env
 channels:
-  - anaconda
   - conda-forge
   - defaults
 dependencies:
@@ -8,3 +7,4 @@ dependencies:
   - numpy==2.2.3
   - pandas==2.2.3
   - pathlib==1.0.1
+  - pyside6==6.11.0

@@ -1,5 +1,5 @@
 """
-    This is a tiny little code to calculate decompaction :)
+    Main decompaction script
 
 """
 
@@ -7,49 +7,25 @@ import logging
 
 import numpy as np
 import pandas as pd
-import pathlib
-
-# logger = logging.getLogger(__name__)
+from io import StringIO
 
 logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
 logger = logging.getLogger()
-
-# fileHandler = logging.FileHandler("{0}/{1}.log".format(logPath, fileName))
-# fileHandler.setFormatter(logFormatter)
-# logger.addHandler(fileHandler)
-
 consoleHandler = logging.StreamHandler()
 consoleHandler.setFormatter(logFormatter)
 logger.addHandler(consoleHandler)
 
 
-def main():
+def main(data_df: pd.DataFrame):
     """
         Main script to run the layer decompaction
         
     """
     
-    # =============================== FOR USER ============================== # 
-
-    # root_path = r"D:\DATA\2nd paper_Chapter 2_sediment_supply_volcanic\Bibliography sediment supply\Decompaction"
-    # file_name = "data_table.csv"
-
+    # =============================== FOR USER ============================== #
     logging.basicConfig(filename='decopro.log', level=logging.DEBUG)
 
-    # ================================ SOFWTARE ============================= #
-    
-    # root_path = pathlib.Path(root_path)
-    while True:
-        input_path = input('Please type the data csv path: ')
-        data_path = pathlib.Path(input_path.strip('"').strip("'"))
-        logger.info(data_path)
-        if data_path.exists():
-            break
-        else:
-            logger.error("Input path not valid... Try again")
-            
-        #root_path.joinpath(file_name)
-    data = pd.read_csv(data_path)
+    # ================================  Workflow ============================= #
 
     # TODO: Datum correction
     # subtract datum to z1 and z2, if not specified, defaults to 0
@@ -59,7 +35,7 @@ def main():
     layer_porosity_dict: dict = dict()
     layer_name_dict: dict = dict()
     stage_dict: dict = dict()
-    for i, layer in enumerate(data.iterrows()):
+    for i, layer in enumerate(data_df.iterrows()):
         logger.info(f"Solving for Stage {i + 1}")
 
         # Get my current layer
@@ -148,17 +124,24 @@ def main():
         solved_layers.append(current_layer)
     
 
-    # Show results. TODO: clean this
-    digs = 5
+    # Show results.
+    digs = 5  # Digits to show. may need to be adjusted?
+    out = StringIO()
     for key in stage_dict.keys():
-        print('====================')
-        print(" ".join(key.split("_")).upper())
+        print('====================', file=out)
+        print(" ".join(key.split("_")).upper(), file=out)
         for k, lay in enumerate(stage_dict[key]):
-            print(f"layer {layer_name_dict[key][k]} base: {np.round(lay, digs)} km")
-            print(f"layer {layer_name_dict[key][k]} average porosity: {np.round(layer_porosity_dict[key][k], digs)}")
-        print('====================')
-        print('\n')
-
+            print(
+                f"layer {layer_name_dict[key][k]} base: {np.round(lay, digs)} km", file=out
+            )
+            print(
+                f"layer {layer_name_dict[key][k]} average porosity: {np.round(layer_porosity_dict[key][k], digs)}",
+                file=out
+            )
+        print('====================', file=out)
+        print('\n', file=out)
+    text_output = out.getvalue()
+    return text_output
 
 def func(zi, zj, phi_0, c):
     """
@@ -177,33 +160,32 @@ def iterative_solver(
     c: float | int
 ) -> float:
     """
-        This function solves iteratively for the past layer base z2_prime
-    
-        solves this equation:
+        This function solves iteratively for the past layer base z2_prime: New depth of Z_2 after the
+        sediments above the layer have been removed (km).
+        solves this eq. [A56.7] from Allen & Allen (2013)
             
         z2_prime = (z2 - z1) - func(z1, z2, phi_0, c) + func(z1_prime, z2_prime, phi_0, c) + z1_prime
 
-        TODO: eq. x from __ cite
-
-        :param lower_bound: The
+        :param lower_bound: The lower bound taken as initial guess for the iterations
         :type lower_bound: float | int
-        :param z2:
-        :type z2:
-        :param z1:
-        :type z1:
-        :param z1_prime:
-        :type z1_prime:
-        :param phi_0:
-        :type phi_0:
-        :param c:
-        :type c:
+        :param z2: Present-day depth to the base of the sedimentary layer (km).
+        :type z2: float
+        :param z1: Present-day depth to the top of the sedimentary layer (km).
+        :type z1: float
+        :param z1_prime: New depth of Z_1 after the sediments above the layer have been removed (km).
+        :type z1_prime: float
+        :param phi_0: Initial (surface) porosity of the sediment. It is a constant that depends on the lithology.
+        :type phi_0: float
+        :param c: Porosity–depth coefficient km-1. It is a constant that depends on the lithology and controls the
+            rate at which porosity decreases with increasing burial depth.
+        :type c: float
 
-        :return: Guess for ...
+        :return: Guess for depth of Z_2 after the sediments above the layer have been removed (km).
         :rtype: float
 
     """
     
-    delta = 1e-4  # km
+    delta = 1e-4  # km - if you need more refinement may need to be adjusted?
     z2_prime_guess = lower_bound
     while True:
         z2_prime = (z2 - z1) - func(z1, z2, phi_0, c) + func(z1_prime, z2_prime_guess, phi_0, c) + z1_prime
@@ -215,10 +197,15 @@ def iterative_solver(
     return float(z2_prime_guess)
 
 
-def solve_layer(my_layer, z1_prime):
+def solve_layer(my_layer, z1_prime: float | int):
     """
-        Solver z2_prime for a layer
-        
+        Solver z2_prime for a layer: New depth of Z_2 after the sediments above the layer have been removed (km).
+
+        :param z1_prime: New depth of Z_1 after the sediments above the layer have been removed (km).
+        :type z1_prime: float
+        :my_layer: that contains parameters that define a given layer
+        :type my_layer:
+
     """
     
     # Solving equation iteratively
@@ -237,7 +224,21 @@ def solve_layer(my_layer, z1_prime):
 def average_layer_porosity(z1_prime, z2_prime, phi_0, c):
     """
         An equation to calculate the average porosity of a given layer at any depth.
-        Base on eq. A56.8 of "Basin analysis priciples..."
+        Base on eq. A56.8 of "Basin analysis principles"
+
+        calculates the average porosity of a sedimentary layer at a given burial depth.
+        It describes how porosity progressively decreases through time as the sediment is buried and compacted
+        due to the increasing load of overlying sediments, from the time of deposition to the present day.
+
+        :param z2_prime: New depth of Z_2 after the sediments above the layer have been removed (km).
+        :type z2_prime: float
+        :param z1_prime: New depth of Z_1 after the sediments above the layer have been removed (km).
+        :type z1_prime: float
+        :param phi_0: Initial (surface) porosity of the sediment. It is a constant that depends on the lithology.
+        :type phi_0: float
+        :param c: Porosity–depth coefficient km-1. It is a constant that depends on the lithology and controls the
+            rate at which porosity decreases with increasing burial depth.
+        :type c: float
 
 
     """
@@ -248,12 +249,4 @@ def average_layer_porosity(z1_prime, z2_prime, phi_0, c):
         logger.error("z1p:", z1_prime, "z2p:", z2_prime, "phi0:", phi_0, "c:", c)
         raise ValueError("The values look weird, check your inputs!!!")
     return phi
-
-
-
-
-if __name__ == "__main__":
-    main()
-
-
  
