@@ -1,12 +1,16 @@
 #!/bin/bash
 # This line ensures the script uses the correct Python version
 
-# Set an environment variable for the root path
-export ENV_ROOT_PATH="/home/david/python_envs"
-echo "Root path to environment: $ENV_ROOT_PATH"
+set -e
 
-# Activate the python environment
-source "$ENV_ROOT_PATH/decopro_env/bin/activate"
+PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "$PROJECT_ROOT"
 
-# Run decopro
-python3 decompaction.py
+source "$(conda info --base)/etc/profile.d/conda.sh"
+# Activate environment
+conda activate decopro_env
+
+export PYTHONPATH="$PROJECT_ROOT:$PYTHONPATH"
+
+# Run the application
+python3 gui/decopro_app.py
