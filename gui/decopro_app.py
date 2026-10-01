@@ -5,6 +5,7 @@
 import pathlib
 import sys
 import pandas as pd
+import numpy as np
 
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PySide6.QtCore import QObject, QThread, Signal, Slot
@@ -69,7 +70,10 @@ class DataFrameModel(QAbstractTableModel):
         if role != Qt.ItemDataRole.EditRole or not index.isValid():
             return False
 
-        self.df.iloc[index.row(), index.column()] = value
+        try:
+            self.df.iloc[index.row(), index.column()] = float(value)
+        except TypeError as e:
+            self.error.emit(f"invalid input {e}")
         self.dataChanged.emit(index, index, [Qt.ItemDataRole.DisplayRole])
         return True
 
@@ -102,7 +106,6 @@ class DataFrameModel(QAbstractTableModel):
         )
 
         self.df.loc[len(self.df)] = new_row.values()
-
         self.endInsertRows()
 
     def remove_rows(self, rows):
