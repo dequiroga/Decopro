@@ -1,5 +1,7 @@
 # Decopro
 
+<img width="107" height="150" alt="decopro" src="https://github.com/user-attachments/assets/3ac5b3fb-96cc-48bb-971f-d0541244ec59" />
+
 DecoPro is a software tool designed to simulate the progressive compaction of sedimentary successions through geological time in both onshore and offshore settings. The reconstruction begins with the deposition of the oldest stratigraphic unit and progresses forward in time as successively younger sedimentary units are added. As sediment accumulates, previously deposited units are progressively buried and compacted, resulting in a reduction in both their thickness and porosity.
 Through this sequential reconstruction, DecoPro tracks changes in the thickness, burial depth, and porosity of each stratigraphic unit from the time of deposition to the present day.
 
