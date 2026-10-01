@@ -48,7 +48,7 @@ def read_layer_data(data_path: pathlib.Path) -> pd.DataFrame:
         logger.error(msg)
         raise FileNotFoundError(msg)
 
-    # TODO: Check for the required cols
+    # Check for the required cols
     if sorted(data_df.columns) == sorted(required_columns):
         logger.info(f"Input data has the right format: {data_df.columns}")
     else:

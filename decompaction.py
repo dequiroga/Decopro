@@ -97,7 +97,7 @@ def main(data_df: pd.DataFrame):
                     )
 
                 else:
-                    temp = new_z2_prime  # THIS IS A HACK
+                    temp = new_z2_prime
 
                     # Solve for z2 prime (past layers)
                     # This re assigment of new_z2_prime is critical. becomes the one for nex iter
@@ -124,7 +124,7 @@ def main(data_df: pd.DataFrame):
         solved_layers.append(current_layer)
     
 
-    # Show results.
+    # Print results.
     digs = 5  # Digits to show. may need to be adjusted?
     out = StringIO()
     for key in stage_dict.keys():
@@ -145,7 +145,7 @@ def main(data_df: pd.DataFrame):
 
 def func(zi, zj, phi_0, c):
     """
-        A function to compact a term of the main equation for readability
+        A function to compact term of the main equation for readability
         
     """
     return (phi_0 / c) * (np.exp(- c * zi) - np.exp(- c * zj))
