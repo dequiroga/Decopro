@@ -16,3 +16,14 @@ References:
 
 [3] Hedberg, H. D. (1936). Gravitational compaction of clays and shales. 5, 31(184), 241–287.
 Sclater, J. G., & Christie, P. A. F. (1980). Continental stretching: An explanation of the Post‐Mid‐Cretaceous subsidence of the central North Sea Basin. Journal of Geophysical Research: Solid Earth, 85(B7), 3711–3739. https://doi.org/10.1029/JB085iB07p03711
+
+
+## Installation
+
+### Windows
+
+1. Execute build.bat
+
+### Linux
+
+1. Execute build.sh
