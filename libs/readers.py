@@ -39,6 +39,7 @@ def read_layer_data(data_path: pathlib.Path) -> pd.DataFrame:
         if data_path.suffix == '.csv':
             logger.info(f"Reading data from {data_path}")
             data_df = pd.read_csv(data_path)
+            data_df.columns = data_df.columns.str.lower()
         else:
             msg = f"The file format {data_path.suffix} is not supported"
             logger.error(msg)
@@ -55,5 +56,13 @@ def read_layer_data(data_path: pathlib.Path) -> pd.DataFrame:
         msg = f"The columns {required_columns} are not present in the input data file"
         logger.error(msg)
         raise ValueError(msg)
+
+    # Add units to header
+    expected_units: dict = {"id": "", "h": "(km)", "z2": "(km)", "z1": "(km)", "c": "(1/km)", "phi_0": "()"}
+    for key, value in expected_units.items():
+        data_df = data_df.rename(columns={
+            key: f"{key} {value}",
+        }
+        )
 
     return data_df

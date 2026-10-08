@@ -5,7 +5,6 @@
 import pathlib
 import sys
 import pandas as pd
-import numpy as np
 
 from PySide6.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PySide6.QtCore import QObject, QThread, Signal, Slot
@@ -283,6 +282,15 @@ if __name__ == "__main__":
         "c": [],
         "phi_0": [],
     })
+
+    # Add units to header
+    expected_units: dict = {"id": "", "h": "(km)", "z2": "(km)", "z1": "(km)", "c": "(1/km)", "phi_0": "()"}
+    for key, value in expected_units.items():
+        df = df.rename(columns={
+            key: f"{key} {value}",
+        }
+        )
+
     app = QApplication(sys.argv)
     window = MainWindow(df)
     window.show()
