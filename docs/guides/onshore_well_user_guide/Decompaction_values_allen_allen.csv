@@ -1,0 +1,5 @@
+Well data at present day (Taken from Table A56.1 Allen & Allen),,,,,
+Layer id,Present day thickness km,"Present day base, km (z2)","Present day top, km (z1)","Porosity depth coefficientc, c (km-1)",Surface porosity
+3 Shale,2,2,0,0.51,0.63
+2 Sandstone,1,3,2,0.27,0.49
+1 Chalk,1,4,3,0.71,0.7

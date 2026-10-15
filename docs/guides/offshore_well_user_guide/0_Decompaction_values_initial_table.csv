@@ -1,0 +1,14 @@
+Well data at present day,,,,,,,,
+Layer id,Main lithology,Present day thickness km,"Present day base, km (z2)","Present day top, km (z1)","Porosity depth coefficientc, c (km-1)",Surface porosity,Top Age (0Ma),Age
+Seabed-T35,Shale-sandstone,0.29,0.4,0.11,0.39a,0.56a,0,Quaternary
+T35-T55,Sandstone-shale-limestone,0.12,0.52,0.4,0.433a+b,0.544a+b,35,Tertiary
+T55-K80,Shale-limestone-sandstone,0.28,0.8,0.52,0.433a+b,0.544a+b,55,Tertiary
+,,,,,,,,
+,a Sclater and Christie (1980),,,,,,,
+,b Schmoker and Halley (1982),,,,,,,
+,,,,,,,,
+,"Sclater, J. G., & Christie, P. A. F. (1980). Continental stretching: An explanation of the Post?Mid?Cretaceous subsidence of the central North Sea Basin. Journal of Geophysical Research: Solid Earth, 85(B7), 3711–3739. https://doi.org/10.1029/JB085iB07p03711",,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,"Schmoker, J. W., & Halley, R. B. (1982). Carbonate Porosity Versus Depth: A Predictable Relation for South Florida. AAPG Bulletin, 66(12), 2561–2570. https://doi.org/10.1306/03B5AC73-16D1-11D7-8645000102C1865D",,,,,,,

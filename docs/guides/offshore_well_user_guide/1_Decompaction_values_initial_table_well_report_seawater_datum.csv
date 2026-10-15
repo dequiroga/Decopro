@@ -1,0 +1,5 @@
+﻿The values correspond to the top of the offshore water column as the datum,,,,,
+id,h,z2,z1,c,phi_0
+T55-K80,0.28,0.8,0.52,0.433,0.544
+T35-T55,0.12,0.52,0.4,0.433,0.544
+Seabed-T35,0.29,0.4,0.11,0.39,0.56
